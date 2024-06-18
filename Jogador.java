@@ -1,9 +1,11 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Jogador {
     private String nome;
     private int numeroDeCartas;
+    private List<Cartas> mao;
 
     /**
      * Função em que o usuário determina o número de jogadores

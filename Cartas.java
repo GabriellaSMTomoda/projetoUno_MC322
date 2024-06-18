@@ -1,37 +1,72 @@
 public class Cartas {
     private Cor cor;
     private TipoDeCarta tipo;
-    private int numero; //-1 se for muda de cor
-    
-    //___________CONSTRUTOR__________________
-    public Cartas(Cor cor, TipoDeCarta tipo, int numero) {
-        this.tipo = tipo;
+    private int numero; // -1 se não for uma carta de número
+
+    // --------------- CONSTRUTOR para cartas de número ---------------
+    public Cartas(Cor cor, int numero) {
+        this.tipo = TipoDeCarta.NUMERO;
         this.cor = cor;
         this.numero = numero;
     }
-    
-    //________GETTERS E SETTERS________________
+
+    // --------------- CONSTRUTOR para cartas especiais coloridas ---------------
+    public Cartas(Cor cor, TipoDeCarta tipo) {
+        if (cor == Cor.PRETA) {
+            throw new IllegalArgumentException("Cor preta não é permitida para cartas coloridas.");
+        }
+        this.tipo = tipo;
+        this.cor = cor;
+        this.numero = -1;
+    }
+
+    // --------------- CONSTRUTOR para cartas especiais pretas ---------------
+    public Cartas(TipoDeCarta tipo) {
+        if (tipo != TipoDeCarta.COMPRA_MAIS_4 && tipo != TipoDeCarta.ALTERACOR) {
+            throw new IllegalArgumentException("Tipo de carta inválido para cartas pretas.");
+        }
+        this.tipo = tipo;
+        this.cor = Cor.PRETA;
+        this.numero = -1;
+    }
+
+    // Getters e Setters
     public Cor getCor() {
         return cor;
     }
+
     public void setCor(Cor cor) {
+        if (this.tipo == TipoDeCarta.NUMERO && cor == Cor.PRETA) {
+            throw new IllegalArgumentException("Cartas de número não podem ser de cor preta.");
+        }
         this.cor = cor;
     }
-    
+
     public TipoDeCarta getTipo() {
         return tipo;
     }
-    
+
     public void setTipo(TipoDeCarta tipo) {
         this.tipo = tipo;
     }
+
     public int getNumero() {
         return numero;
     }
 
     public void setNumero(int numero) {
+        if (this.tipo != TipoDeCarta.NUMERO) {
+            throw new IllegalArgumentException("Somente cartas de número podem ter um número.");
+        }
         this.numero = numero;
     }
-    
-}
 
+    @Override
+    public String toString() {
+        if (tipo == TipoDeCarta.NUMERO) {
+            return "Carta{" + "cor=" + cor + ", numero=" + numero + '}';
+        } else {
+            return "Carta{" + "cor=" + cor + ", tipo=" + tipo + '}';
+        }
+    }
+}

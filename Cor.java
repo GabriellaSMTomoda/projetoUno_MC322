@@ -3,5 +3,5 @@ public enum Cor {
     AMARELA,
     VERDE,
     VERMELHA,
-    PRETA
+    PRETA // *Cartas especiais: COMPRA+4 e ALTERACOR
 }

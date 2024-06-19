@@ -6,6 +6,7 @@ public class Jogador {
     private String nome;
     private int numeroDeCartas;
     private List<Cartas> mao;
+    private static List<Jogador> jogadores = new ArrayList<>();
 
     /**
      * Função em que o usuário determina o número de jogadores
@@ -29,7 +30,6 @@ public class Jogador {
      * Função que coleta a lista de jogadores
      */
     public static void listaDeJogadores() {
-        ArrayList<Jogador> jogadores = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         int nJogadores = numeroDeJogadores();
@@ -46,7 +46,29 @@ public class Jogador {
             System.out.println(jogador.getNome());
         }
         System.out.println("________________________");
-        scanner.close();
+        //scanner.close();
+    }
+
+    public void distribuirCartas(Baralho baralho) {
+        final int CARTAS_INICIAIS = 7;
+        for(Jogador jogador : jogadores) {
+            jogador.mao = new ArrayList<>();
+            for(int i = 0; i < CARTAS_INICIAIS; i++) {
+                jogador.mao.add(baralho.getBaralho().remove(baralho.getBaralho().size() -1));
+            }
+            jogador.setNumeroDeCartas(CARTAS_INICIAIS);
+        }
+    }
+
+    /**
+    * Função para imprimir a mão do jogador
+    */
+    public void imprimirMao() {
+        System.out.println("Mão do jogador " + this.nome + ":");
+        for (Cartas carta : this.mao) {
+            System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
+        }
+        System.out.println("________________________");
     }
 
 
@@ -54,6 +76,7 @@ public class Jogador {
     public Jogador(String nome, int numeroDeCartas) {
         this.nome = nome;
         this.numeroDeCartas = numeroDeCartas;
+        this.mao = new ArrayList<>();
     }
 
     // --------------- GETTERS E SETTERS ---------------------------
@@ -71,6 +94,10 @@ public class Jogador {
 
     public void setNumeroDeCartas(int numeroDeCartas) {
         this.numeroDeCartas = numeroDeCartas;
+    }
+
+    public static List<Jogador> getJogadores() {
+        return jogadores;
     }
 
 }

@@ -15,7 +15,20 @@ public class Main {
                 "\n" + //
                 "");
 
-        Jogador.listaDeJogadores();
+                Baralho baralho = new Baralho();
+                Jogador.listaDeJogadores();
+
+                //baralho.imprimirBaralho();
+        
+                Jogador jogador = new Jogador("Temp", 0); 
+                jogador.distribuirCartas(baralho);
+        
+                for (Jogador j : Jogador.getJogadores()) {
+                    j.imprimirMao();
+                }
+                //baralho.imprimirBaralho();
+
+
         
     }
 }

@@ -11,20 +11,14 @@ public class Baralho {
         embaralhar(); // Função que embaralha o baralho todas as vezes necessárias
     }
 
-    private void formarBaralho() {
-        // Adicionar carta de número 0 de cada cor
-        for (Cor cor : Cor.values()) {
-            if (cor != Cor.PRETA) {
-                baralho.add(new Cartas(cor, 0));
-            }
-        }
+    public void formarBaralho() {
 
-        // Adicionar cartas de número (1-9) de cada cor, duas vezes cada
+        // Adicionar cartas de número (0-9) de cada cor, duas vezes cada
         for (Cor cor : Cor.values()) {
             if (cor != Cor.PRETA) {
-                for (int i = 1; i <= 9; i++) {
+                for (int i = 0; i <= 9; i++) {
                     baralho.add(new Cartas(cor, i));
-                    baralho.add(new Cartas(cor, i)); // Cada número (1-9) aparece duas vezes
+                    baralho.add(new Cartas(cor, i)); // Cada número (0-9) aparece duas vezes
                 }
 
                 // Adicionar cartas especiais de cada cor (duas vezes cada)
@@ -73,4 +67,11 @@ public class Baralho {
     public String toString() {
         return "Baralho{" + "baralho=" + baralho + '}';
     }
+
+    public void imprimirBaralho() {
+        for (Cartas carta : baralho) {
+            System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
+        }
+    }
+    
 }

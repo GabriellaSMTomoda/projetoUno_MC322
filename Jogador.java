@@ -77,14 +77,14 @@ public class Jogador {
     }
     
 
-    // --------------- CONSTRUTOR-----------------------------------
+    // ----------------------------------- CONSTRUTOR -----------------------------------
     public Jogador(String nome, int numeroDeCartas) {
         this.nome = nome;
         this.numeroDeCartas = numeroDeCartas;
         this.mao = new ArrayList<>();
     }
 
-    // --------------- GETTERS E SETTERS ---------------------------
+    // ----------------------------------- GETTERS E SETTERS ---------------------------
     public String getNome() {
         return nome;
     }

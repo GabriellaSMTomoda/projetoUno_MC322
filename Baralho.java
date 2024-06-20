@@ -5,6 +5,7 @@ import java.util.List;
 public class Baralho {
     private List<Cartas> baralho;
 
+    // --------------------------- CONSTRUTOR-----------------------------------
     public Baralho() {
         this.baralho = new ArrayList<>();
         formarBaralho(); // Função que cria o baralho a partir das cartas que podem existir
@@ -59,24 +60,28 @@ public class Baralho {
     }
 
     private void reabastecerBaralho(List<Cartas> pilhaDeDescarte) {
-        Cartas cartaNoTopo = pilhaDeDescarte.remove(pilhaDeDescarte.size() - 1); // Deixar a última carta de fora
+        Cartas cartaNoTopo = pilhaDeDescarte.remove(pilhaDeDescarte.size() - 1); // Não usa a última carta
         baralho.addAll(pilhaDeDescarte);
         pilhaDeDescarte.clear();
-        pilhaDeDescarte.add(cartaNoTopo); // Recolocar a última carta na pilha de descarte
+        pilhaDeDescarte.add(cartaNoTopo); // Recoloca a última carta na pilha de descarte
     }
 
-    // Getter
+    // --------------------------- GETTERS E SETTERS ---------------------------
     public List<Cartas> getBaralho() {
         return baralho;
     }
 
-    // to String
+    public void setBaralho(List<Cartas> baralho) {
+        this.baralho = baralho;
+    }
+
+    // Método toString para imprimir o estado do baralho
     @Override
     public String toString() {
         return "Baralho{" + "baralho=" + baralho + '}';
     }
 
-    // Método que imprimi o baralho para teste
+    // Método que imprime o baralho para teste
     public void imprimirBaralho() {
         for (Cartas carta : baralho) {
             if (carta.getTipo() == TipoDeCarta.NUMERO) {

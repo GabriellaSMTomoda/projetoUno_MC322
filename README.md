@@ -1,7 +1,7 @@
 # projetoUno_MC322
 
 Desenvolvimento de um UNO utilizando os conceitos de POO visto em aula
-________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________
 
 #Classe Baralho.
 
@@ -17,12 +17,44 @@ Método formar baralho → cria um baralho utilizando todas as cartas que devem 
     4 cartas "ALTERACOR" = 4 cartas
     Total = 108 cartas    
 
+Método comprar cartas → Método para comprar cartas quando o jogador precisar. Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
+
+Método reabastecer baralho → coloca todas as cartas do descarte no baralho novamente
+
 Método embaralhar → Deixa o baralho com todas as cartas em ordem aleatória sempre que necessário
 
-*Observação: Ao executar o arquivo Baralho, a saída será um baralho em ordem aleatória  
-________________________________________________________________________________________________________________________________________
+Métodos getters, setters e toString
+_________________________________________________________________________________________________________________________________
 
 #Classe Cartas.
 
 Descrição: Classe responsável pelo modelo que todas as cartas devem ter, adicionando os métodos e funções de cada tipo de cartas
 
+_________________________________________________________________________________________________________________________________
+
+#Classe Mesa.
+
+
+_________________________________________________________________________________________________________________________________
+
+#Classe Jogador.
+
+_________________________________________________________________________________________________________________________________
+
+#Main
+
+_________________________________________________________________________________________________________________________________
+
+#Classe OperacaoCarta
+
+_________________________________________________________________________________________________________________________________
+
+#Classe OperacaoJogador
+
+_________________________________________________________________________________________________________________________________
+
+#ENUMs
+
+TipoDeCarta
+
+Cor

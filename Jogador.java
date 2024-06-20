@@ -49,7 +49,7 @@ public class Jogador {
         //scanner.close();
     }
 
-    public void distribuirCartas(Baralho baralho) {
+    public static void distribuirCartas(Baralho baralho) {
         final int CARTAS_INICIAIS = 7;
         for(Jogador jogador : jogadores) {
             jogador.mao = new ArrayList<>();
@@ -58,6 +58,10 @@ public class Jogador {
             }
             jogador.setNumeroDeCartas(CARTAS_INICIAIS);
         }
+    }
+
+    public static boolean Resultado(Jogador jogador) {
+        return jogador.getMao().isEmpty();
     }
 
     /**
@@ -98,6 +102,10 @@ public class Jogador {
 
     public static List<Jogador> getJogadores() {
         return jogadores;
+    }
+
+    public List<Cartas> getMao() {
+        return mao;
     }
 
 }

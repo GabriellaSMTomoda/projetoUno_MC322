@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Bem vindx ao nosso...");
@@ -15,20 +17,30 @@ public class Main {
                 "\n" + //
                 "");
 
-                Baralho baralho = new Baralho();
-                Jogador.listaDeJogadores();
-
-                //baralho.imprimirBaralho();
+        Baralho baralho = new Baralho();
+        Jogador.listaDeJogadores();
+        Jogador.distribuirCartas(baralho);
         
-                Jogador jogador = new Jogador("Temp", 0); 
-                jogador.distribuirCartas(baralho);
-        
-                for (Jogador j : Jogador.getJogadores()) {
-                    j.imprimirMao();
-                }
-                //baralho.imprimirBaralho();
+        for (Jogador j : Jogador.getJogadores()) {
+            j.imprimirMao();
+        }
 
+        Mesa mesa = new Mesa();
+        mesa.primeiraCarta(baralho);
+        mesa.imprimeUltimaCarta();
 
-        
+        List<Jogador> jogadores = Jogador.getJogadores();
+        do {
+            Jogador jogadorAtual = mesa.proximoTurno(jogadores);
+            System.out.println("É a vez de: " + jogadorAtual.getNome());
+
+            //logica das cartas
+
+            if (Jogador.Resultado(jogadorAtual)) {
+                System.out.println(jogadorAtual.getNome() + " venceu o jogo!");
+                break;
+            }
+
+        } while (true);
     }
 }

@@ -12,16 +12,19 @@ public class Baralho {
     }
 
     public void formarBaralho() {
-
-        // Adicionar cartas de número (0-9) de cada cor, duas vezes cada
+        // Adiciona cartas de número de cada cor
         for (Cor cor : Cor.values()) {
             if (cor != Cor.PRETA) {
-                for (int i = 0; i <= 9; i++) {
+                // Adiciona a carta 0 apenas uma vez por cor
+                baralho.add(new Cartas(cor, 0));
+                
+                // Adiciona cartas de número 1 a 9 duas vezes cada
+                for (int i = 1; i <= 9; i++) {
                     baralho.add(new Cartas(cor, i));
-                    baralho.add(new Cartas(cor, i)); // Cada número (0-9) aparece duas vezes
+                    baralho.add(new Cartas(cor, i));
                 }
 
-                // Adicionar cartas especiais de cada cor (duas vezes cada)
+                // Adiciona cartas especiais de cada cor (duas vezes cada)
                 for (int i = 0; i < 2; i++) {
                     baralho.add(new Cartas(cor, TipoDeCarta.COMPRA_MAIS_2));
                     baralho.add(new Cartas(cor, TipoDeCarta.BLOQUEIO));
@@ -73,5 +76,4 @@ public class Baralho {
             System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
         }
     }
-    
 }

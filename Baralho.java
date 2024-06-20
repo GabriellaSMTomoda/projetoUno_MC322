@@ -40,14 +40,17 @@ public class Baralho {
         }
     }
 
+    // Embaralha o baralho
     public void embaralhar() {
         Collections.shuffle(baralho);
     }
 
+    // Método para comprar cartas quando o jogador precisar
+    // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
     public Cartas comprarCarta(List<Cartas> pilhaDeDescarte) {
         if (baralho.isEmpty()) {
             if (pilhaDeDescarte == null || pilhaDeDescarte.isEmpty()) {
-                return null; // ou lançar uma exceção
+                return null;
             }
             reabastecerBaralho(pilhaDeDescarte);
             embaralhar();

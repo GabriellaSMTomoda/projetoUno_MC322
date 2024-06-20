@@ -26,7 +26,3 @@ ________________________________________________________________________________
 
 Descrição: Classe responsável pelo modelo que todas as cartas devem ter, adicionando os métodos e funções de cada tipo de cartas
 
-
-
-
-

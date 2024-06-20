@@ -3,14 +3,14 @@ public class Cartas {
     private TipoDeCarta tipo;
     private int numero; // -1 se não for uma carta de número
 
-    // --------------- CONSTRUTOR para cartas de número ---------------
+    // Construtor para cartas de número
     public Cartas(Cor cor, int numero) {
         this.tipo = TipoDeCarta.NUMERO;
         this.cor = cor;
         this.numero = numero;
     }
 
-    // --------------- CONSTRUTOR para cartas especiais coloridas ---------------
+    // Construtor para cartas especiais coloridas
     public Cartas(Cor cor, TipoDeCarta tipo) {
         if (cor == Cor.PRETA) {
             throw new IllegalArgumentException("Cor preta não é permitida para cartas coloridas.");
@@ -20,7 +20,7 @@ public class Cartas {
         this.numero = -1;
     }
 
-    // --------------- CONSTRUTOR para cartas especiais pretas ---------------
+    // Construtor para cartas especiais pretas
     public Cartas(TipoDeCarta tipo) {
         if (tipo != TipoDeCarta.COMPRA_MAIS_4 && tipo != TipoDeCarta.ALTERACOR) {
             throw new IllegalArgumentException("Tipo de carta inválido para cartas pretas.");

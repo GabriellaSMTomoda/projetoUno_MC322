@@ -73,7 +73,11 @@ public class Baralho {
 
     public void imprimirBaralho() {
         for (Cartas carta : baralho) {
-            System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
+            if (carta.getTipo() == TipoDeCarta.NUMERO) {
+                System.out.println("Cor: " + carta.getCor() + ", Numero: " + carta.getNumero());
+            } else {
+                System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo());
+            }
         }
     }
 }

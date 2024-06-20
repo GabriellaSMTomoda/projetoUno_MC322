@@ -66,11 +66,12 @@ public class Jogador {
     public void imprimirMao() {
         System.out.println("Mão do jogador " + this.nome + ":");
         for (Cartas carta : this.mao) {
+            
             System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
         }
         System.out.println("________________________");
     }
-
+    
 
     // --------------- CONSTRUTOR-----------------------------------
     public Jogador(String nome, int numeroDeCartas) {

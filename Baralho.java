@@ -65,15 +65,18 @@ public class Baralho {
         pilhaDeDescarte.add(cartaNoTopo); // Recolocar a última carta na pilha de descarte
     }
 
+    // Getter
     public List<Cartas> getBaralho() {
         return baralho;
     }
 
+    // to String
     @Override
     public String toString() {
         return "Baralho{" + "baralho=" + baralho + '}';
     }
 
+    // Método que imprimi o baralho para teste
     public void imprimirBaralho() {
         for (Cartas carta : baralho) {
             if (carta.getTipo() == TipoDeCarta.NUMERO) {

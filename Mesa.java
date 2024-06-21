@@ -4,7 +4,7 @@ import java.util.List;
 public class Mesa {
     private List<Cartas> monteDeCompra;   
     private Cartas ultimaCartaJogada;
-    private int jogadorAtual;
+    private int jogadorAtual = 0;
 
     // ----------------------------------- CONSTRUTOR -----------------------------------
     public Mesa() {
@@ -58,9 +58,9 @@ public class Mesa {
 
     // Método para passar para o próximo turno
     public Jogador proximoTurno(List<Jogador> jogadores) {
-        int tamanho = jogadores.size();
-        jogadorAtual = (jogadorAtual + 1) % tamanho;
-        return jogadores.get(jogadorAtual);
+        Jogador jogador = jogadores.get(jogadorAtual);
+        jogadorAtual = (jogadorAtual + 1) % jogadores.size();
+        return jogador;
     }
 
     // Método para imprimir a última carta jogada

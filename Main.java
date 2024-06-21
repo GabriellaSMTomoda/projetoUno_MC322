@@ -18,12 +18,8 @@ public class Main {
                 "");
 
         Baralho baralho = new Baralho();
-        Jogador.listaDeJogadores();
+        OperacaoJogador.listaDeJogadores();
         Jogador.distribuirCartas(baralho);
-        
-        for (Jogador j : Jogador.getJogadores()) {
-            j.imprimirMao();
-        }
 
         Mesa mesa = new Mesa();
         mesa.primeiraCarta(baralho);
@@ -31,10 +27,12 @@ public class Main {
 
         List<Jogador> jogadores = Jogador.getJogadores();
         do {
-            Jogador jogadorAtual = mesa.proximoTurno(jogadores);
+            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores);
             System.out.println("É a vez de: " + jogadorAtual.getNome());
+            jogadorAtual.imprimirMao();
+            jogadorAtual.menuJogador();
 
-            //logica das cartas
+            // Lógica das cartas
 
             if (Jogador.Resultado(jogadorAtual)) {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");

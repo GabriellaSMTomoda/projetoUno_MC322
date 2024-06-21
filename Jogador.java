@@ -37,7 +37,7 @@ public class Jogador {
         for (int i = 0; i < nJogadores; i++) {
             System.out.print("Digite o nome do jogador " + (i + 1) + ": ");
             String nome = scanner.nextLine();
-            jogadores.add(new Jogador(nome, 0)); // iniciando o número de cartas com 0
+            jogadores.add(new OperacaoJogador(nome, 0, -1)); // iniciando o número de cartas com 0
         }
 
         System.out.println("________________________\n");

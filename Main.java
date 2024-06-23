@@ -40,7 +40,7 @@ public class Main {
                 break;
             }
             mesa.embaralharMonteDeCompra();
-
+            
         } while (true);
     }
 }

@@ -60,8 +60,14 @@ class OperacaoJogador extends Jogador {
                 menuJogador(baralho, mesa, jogador, operacaoCarta);
                 break;
             case 3:
-                System.out.println("Você passou a vez.");
-                ultimaJogada = 3;
+                if (ultimaJogada == 4) {
+                    System.out.println("Você passou a vez.");
+                    ultimaJogada = 3;
+                } else {
+                    System.out.println("Você está tentando passar a vez sem jogar, +1 carta");
+                    ultimaJogada = 3;
+                    menuJogador(baralho, mesa, jogador, operacaoCarta);
+                }
                 break;
             default:
                 System.out.println("Opção inválida, tente novamente.");

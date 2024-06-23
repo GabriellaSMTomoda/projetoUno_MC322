@@ -10,8 +10,11 @@ class OperacaoJogador extends Jogador {
         this.ultimaJogada = ultimaJogada;
     }
     
-    public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador) {
+    public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador, OperacaoCarta operacaoCarta) {
         mesa.imprimeUltimaCarta();
+        if (mesa.getUltimaCartaJogada().getCor() == Cor.PRETA) {
+            System.out.println("A cor da rodada é: " + mesa.getCorAtual());
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o número do que deseja fazer: ");
         System.out.println("0 - Jogar carta\n" + 
@@ -31,9 +34,9 @@ class OperacaoJogador extends Jogador {
                     compra(jogador, mesa);
                     break;
                 } else {
-                    jogarCarta(mesa);
+                    jogarCarta(mesa, operacaoCarta, jogador);
                 }
-                menuJogador(baralho, mesa, jogador);
+                menuJogador(baralho, mesa, jogador, operacaoCarta);
 
                 break;
             case 1:
@@ -43,7 +46,7 @@ class OperacaoJogador extends Jogador {
                 } else {
                     compra(jogador, mesa);
                     ultimaJogada = 1;
-                    menuJogador(baralho, mesa, jogador);
+                    menuJogador(baralho, mesa, jogador, operacaoCarta);
                 }
                 break;
             case 2:
@@ -54,20 +57,15 @@ class OperacaoJogador extends Jogador {
                 } else {
                     ultimaJogada = 2;
                 }
-                menuJogador(baralho, mesa, jogador);
+                menuJogador(baralho, mesa, jogador, operacaoCarta);
                 break;
             case 3:
-                if(ultimaJogada == 1) {
-                    System.out.println("Você passou a vez.");
-                } else {
-                    System.out.println("Você passou a vez sem jogar...+1 carta e perdeu a vez");
-                    compra(jogador, mesa);
-                }
+                System.out.println("Você passou a vez.");
                 ultimaJogada = 3;
                 break;
             default:
                 System.out.println("Opção inválida, tente novamente.");
-                menuJogador(baralho, mesa, jogador);
+                menuJogador(baralho, mesa, jogador, operacaoCarta);
                 break;
         }
     }
@@ -83,7 +81,7 @@ class OperacaoJogador extends Jogador {
         imprimirMao();
     }
 
-    public void jogarCarta(Mesa mesa) {
+    public void jogarCarta(Mesa mesa, OperacaoCarta operacaoCarta, Jogador jogador) {
         Scanner scanner = new Scanner(System.in);
         List<Cartas> mao = getMao(); // retorna a mão do jogador
         System.out.println("Escolha o número da carta que deseja jogar:");
@@ -110,14 +108,8 @@ class OperacaoJogador extends Jogador {
                 //mesa.jogarCarta(cartaJogada); 
                 setNumeroDeCartas(mao.size()); // atualiza o número de cartas na mão
                 System.out.println("Você jogou a carta: " + cartaJogada);
+                operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa);
 
-                // Se a carta jogada for uma carta coringa, perguntar a cor escolhida
-                if (cartaJogada.getCor() == Cor.PRETA) {
-                    System.out.println("Escolha a cor para continuar (AZUL, AMARELA, VERDE, VERMELHA):");
-                    String novaCor = scanner.next().toUpperCase();
-                    Cor corEscolhida = Cor.valueOf(novaCor);
-                    mesa.setCorAtual(corEscolhida); // define a cor atual da mesa
-                }
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");
                 imprimirMao(); // imprime a mão do jogador

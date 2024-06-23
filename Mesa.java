@@ -5,8 +5,13 @@ public class Mesa {
     private List<Cartas> monteDeCompra;   
     private Cartas ultimaCartaJogada;
     private int jogadorAtual = 0;
+    
     private boolean ordemNormal = true;
     private boolean bloqueado = false;
+    private boolean compraDuas = false;
+    private boolean compraQuatro = false;
+    
+    private boolean primeiroTurno = true;
     private Cor corAtual;
     
     
@@ -19,6 +24,44 @@ public class Mesa {
     }
     
     // ----------------------------------- GETTERS E SETTERS ---------------------------
+    public boolean isCompraDuas() {
+        return compraDuas;
+    }
+
+    public void setCompraDuas(boolean compraDuas) {
+        this.compraDuas = compraDuas;
+    }
+
+    public boolean isCompraQuatro() {
+        return compraQuatro;
+    }
+
+    public void setCompraQuatro(boolean compraQuatro) {
+        this.compraQuatro = compraQuatro;
+    }
+
+    public boolean isOrdemNormal() {
+        return ordemNormal;
+    }
+
+    public void setOrdemNormal(boolean ordemNormal) {
+        this.ordemNormal = ordemNormal;
+    }
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    public boolean isPrimeiroTurno() {
+        return primeiroTurno;
+    }
+
+    public void setPrimeiroTurno(boolean primeiroTurno) {
+        this.primeiroTurno = primeiroTurno;
+    }
     public void setCorAtual(Cor cor) {
         this.corAtual = cor;
     }
@@ -70,14 +113,34 @@ public class Mesa {
     }
 
     // Método para passar para o próximo turno
-    public Jogador proximoTurno(List<Jogador> jogadores) {
+    public Jogador proximoTurno(List<Jogador> jogadores, OperacaoCarta operacaoCarta, Mesa mesa) {
+        
         if (bloqueado) {
-            jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2)) % jogadores.size();
+            jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2) + jogadores.size()) % jogadores.size();
             bloqueado = false;
+            return jogadores.get(jogadorAtual);
+        } 
+        if (primeiroTurno) {
+            jogadorAtual = 0;
+            primeiroTurno = !primeiroTurno;
         } else {
-            jogadorAtual = (jogadorAtual + (ordemNormal ? 1 : -1)) % jogadores.size();
+            jogadorAtual = (jogadorAtual + (ordemNormal ? 1 : -1) + jogadores.size()) % jogadores.size();
+            comprarCarta(operacaoCarta, jogadores, mesa);
         }
         return jogadores.get(jogadorAtual);
+    }
+
+    public void comprarCarta(OperacaoCarta operacaoCarta, List<Jogador> jogadores, Mesa mesa) {
+        if(compraDuas) {
+            operacaoCarta.compraDuas(jogadores.get(jogadorAtual), mesa);
+            System.out.println("O jogador anterior jogou um +2 para você");
+            compraDuas = false;
+        }
+        if(compraQuatro) {
+            operacaoCarta.compraQuatro(jogadores.get(jogadorAtual), mesa);
+            System.out.println("O jogador anterior jogou um +4 para você");
+            compraQuatro = false;
+        }
     }
 
     // Método para comprar cartas quando o jogador precisar
@@ -87,16 +150,6 @@ public class Mesa {
             return null;
         }
         return monteDeCompra.remove(monteDeCompra.size() - 1);
-    }
-
-    // Método para inverter a ordem de jogo
-    public void inverterOrdem() {
-        ordemNormal = !ordemNormal;
-    }
-    
-    // Método para bloquear o próximo jogador
-    public void bloquearProximoJogador() {
-        bloqueado = true;
     }
 
     // Método para imprimir a última carta jogada

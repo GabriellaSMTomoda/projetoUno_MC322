@@ -1,16 +1,53 @@
 import java.util.List;
+import java.util.Scanner;
 
-public class OperacaoCarta extends Baralho {
-    private int numeroDeCartas;
+public class OperacaoCarta {
+    // private int numeroDeCartas;
 
-    public OperacaoCarta() {
-        super();
-        this.numeroDeCartas = 0;
-    }
+    // public OperacaoCarta(Cor cor, int numero, int numeroDeCartas) {
+    //     super(cor, numero);
+    //     this.numeroDeCartas = numeroDeCartas;
+    // }
 
-    public OperacaoCarta(List<Cartas> baralho, int numeroDeCartas) {
-        super(baralho);
-        this.numeroDeCartas = numeroDeCartas;
+    // public OperacaoCarta(Cor cor, TipoDeCarta tipo, int numeroDeCartas) {
+    //     super(cor, tipo);
+    //     this.numeroDeCartas = numeroDeCartas;
+    // }
+
+    // public OperacaoCarta(TipoDeCarta tipo, int numeroDeCartas) {
+    //     super(tipo);
+    //     this.numeroDeCartas = numeroDeCartas;
+    // }
+
+    public void realizarOperacaoCarta(Cartas carta, Mesa mesa) {
+        TipoDeCarta tipo = carta.getTipo();
+        switch (tipo) {
+            case INVERTE:
+                inverterOrdem(mesa);
+                break;
+            case BLOQUEIO:
+                bloquearProximoJogador(mesa);       
+                break;
+            case COMPRA_MAIS_2:
+                mesa.setCompraDuas(true);
+                                
+                break;
+            case COMPRA_MAIS_4:
+                mudaCor(carta, mesa);
+                mesa.setCompraQuatro(true);
+
+                break;
+            case ALTERACOR:
+                mudaCor(carta, mesa);
+                
+                break;
+            case NUMERO:
+                
+                break;
+        
+            default:
+                break;
+        }
     }
 
     // Compra uma carta
@@ -22,10 +59,16 @@ public class OperacaoCarta extends Baralho {
         }
     }
 
-    // Inverte a ordem de jogo
-    public void inverte(Mesa mesa) {
-        mesa.inverterOrdem();
+    // Método para inverter a ordem de jogo
+    public void inverterOrdem(Mesa mesa) {
+        mesa.setOrdemNormal(false);
     }
+        
+    // Método para bloquear o próximo jogador
+    public void bloquearProximoJogador(Mesa mesa) {
+        mesa.setBloqueado(true);
+    }
+
 
     // Compra duas cartas
     public void compraDuas(Jogador jogador, Mesa mesa) {
@@ -41,13 +84,23 @@ public class OperacaoCarta extends Baralho {
         }
     }
 
-    // Bloqueia o próximo jogador
-    public void bloqueio(Mesa mesa) {
-        mesa.bloquearProximoJogador();
-    }
-
     // Muda a cor
-    public void mudaCor(Cartas carta, Cor novaCor) {
-        carta.setCor(novaCor);
+    public void mudaCor(Cartas carta, Mesa mesa) {
+        Scanner scanner = new Scanner(System.in);
+    
+        if (carta.getCor() == Cor.PRETA) {
+            while (true) {
+                System.out.println("Escolha a cor para continuar (AZUL, AMARELA, VERDE, VERMELHA):");
+                String novaCor = scanner.next().toUpperCase();
+    
+                try {
+                    Cor corEscolhida = Cor.valueOf(novaCor);
+                    mesa.setCorAtual(corEscolhida); // define a cor atual da mesa
+                    break; // sai do loop se a cor for válida
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Cor inválida. Por favor, escolha uma cor válida (AZUL, AMARELA, VERDE, VERMELHA).");
+                }
+            }
+        }
     }
 }

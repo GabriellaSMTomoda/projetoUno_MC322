@@ -24,12 +24,14 @@ public class Main {
         Mesa mesa = new Mesa();
         mesa.primeiraCarta(baralho);
 
+        OperacaoCarta operacaoCarta = new OperacaoCarta();
+
         List<Jogador> jogadores = Jogador.getJogadores();
         do {
-            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores);
+            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa);
             System.out.println("É a vez de: " + jogadorAtual.getNome());
             jogadorAtual.imprimirMao();
-            jogadorAtual.menuJogador(baralho, mesa, jogadorAtual);
+            jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta);
 
 
             if (Jogador.Resultado(jogadorAtual)) {

@@ -23,16 +23,14 @@ public class Main {
 
         Mesa mesa = new Mesa();
         mesa.primeiraCarta(baralho);
-        mesa.imprimeUltimaCarta();
 
         List<Jogador> jogadores = Jogador.getJogadores();
         do {
             OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores);
             System.out.println("É a vez de: " + jogadorAtual.getNome());
             jogadorAtual.imprimirMao();
-            jogadorAtual.menuJogador();
+            jogadorAtual.menuJogador(baralho, mesa, jogadorAtual);
 
-            // Lógica das cartas
 
             if (Jogador.Resultado(jogadorAtual)) {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");

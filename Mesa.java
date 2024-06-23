@@ -5,15 +5,28 @@ public class Mesa {
     private List<Cartas> monteDeCompra;   
     private Cartas ultimaCartaJogada;
     private int jogadorAtual = 0;
-
+    private boolean ordemNormal = true;
+    private boolean bloqueado = false;
+    private Cor corAtual;
+    
+    
     // ----------------------------------- CONSTRUTOR -----------------------------------
     public Mesa() {
         monteDeCompra = new ArrayList<>();
         this.ultimaCartaJogada = null;
         jogadorAtual = 0;
+        ordemNormal = true;
+    }
+    
+    // ----------------------------------- GETTERS E SETTERS ---------------------------
+    public void setCorAtual(Cor cor) {
+        this.corAtual = cor;
     }
 
-    // ----------------------------------- GETTERS E SETTERS ---------------------------
+    public Cor getCorAtual() {
+        return corAtual;
+    }
+
     public List<Cartas> getMonteDeCompra() {
         return monteDeCompra;
     }
@@ -58,9 +71,32 @@ public class Mesa {
 
     // Método para passar para o próximo turno
     public Jogador proximoTurno(List<Jogador> jogadores) {
-        Jogador jogador = jogadores.get(jogadorAtual);
-        jogadorAtual = (jogadorAtual + 1) % jogadores.size();
-        return jogador;
+        if (bloqueado) {
+            jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2)) % jogadores.size();
+            bloqueado = false;
+        } else {
+            jogadorAtual = (jogadorAtual + (ordemNormal ? 1 : -1)) % jogadores.size();
+        }
+        return jogadores.get(jogadorAtual);
+    }
+
+    // Método para comprar cartas quando o jogador precisar
+    // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
+    public Cartas comprarCarta() {
+        if (monteDeCompra.isEmpty()) {
+            return null;
+        }
+        return monteDeCompra.remove(monteDeCompra.size() - 1);
+    }
+
+    // Método para inverter a ordem de jogo
+    public void inverterOrdem() {
+        ordemNormal = !ordemNormal;
+    }
+    
+    // Método para bloquear o próximo jogador
+    public void bloquearProximoJogador() {
+        bloqueado = true;
     }
 
     // Método para imprimir a última carta jogada

@@ -78,7 +78,11 @@ public class Baralho {
     // Método toString para imprimir o estado do baralho
     @Override
     public String toString() {
-        return "Baralho{" + "baralho=" + baralho + '}';
+        StringBuilder sb = new StringBuilder();
+        for (Cartas carta : baralho) {
+            sb.append(carta).append("\n");
+        }
+        return sb.toString();
     }
 
     // Método que imprime o baralho para teste

@@ -22,6 +22,7 @@ public class Main {
         Jogador.distribuirCartas(baralho);
 
         Mesa mesa = new Mesa();
+
         mesa.primeiraCarta(baralho);
 
         OperacaoCarta operacaoCarta = new OperacaoCarta();
@@ -38,7 +39,7 @@ public class Main {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");
                 break;
             }
-            System.out.println(mesa.getMonteDeCompra());
+            mesa.embaralharMonteDeCompra();
 
         } while (true);
     }

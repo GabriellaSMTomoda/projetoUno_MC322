@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Mesa {
@@ -150,6 +151,7 @@ public class Mesa {
             // Adiciona um novo baralho se o monte de compra estiver vazio
             Baralho novoBaralho = new Baralho();
             monteDeCompra.addAll(novoBaralho.getBaralho());
+            
         }
     
         if (monteDeCompra.isEmpty()) {
@@ -159,6 +161,11 @@ public class Mesa {
         return monteDeCompra.remove(monteDeCompra.size() - 1);
     }
 
+    public void embaralharMonteDeCompra() {
+        Collections.shuffle(monteDeCompra);
+    }
+
+
     // Método para imprimir a última carta jogada
     public void imprimeUltimaCarta() {
         System.out.println("Última carta jogada: " + ultimaCartaJogada);
@@ -167,9 +174,12 @@ public class Mesa {
     // Método toString para representação textual da Mesa
     @Override
     public String toString() {
-        return "Mesa{" +
-                "monteDeCompra=" + monteDeCompra +
-                ", ultimaCartaJogada=" + ultimaCartaJogada +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Monte de Compra:\n");
+        for (Cartas carta : monteDeCompra) {
+            sb.append(carta).append("\n");
+        }
+        sb.append("Última Carta Jogada: ").append(ultimaCartaJogada).append("\n");
+        return sb.toString();
     }
 }

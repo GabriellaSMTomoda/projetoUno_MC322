@@ -38,6 +38,7 @@ public class Main {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");
                 break;
             }
+            System.out.println(mesa.getMonteDeCompra());
 
         } while (true);
     }

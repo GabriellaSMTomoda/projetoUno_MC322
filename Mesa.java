@@ -147,8 +147,15 @@ public class Mesa {
     // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
     public Cartas comprarCarta() {
         if (monteDeCompra.isEmpty()) {
-            return null;
+            // Adiciona um novo baralho se o monte de compra estiver vazio
+            Baralho novoBaralho = new Baralho();
+            monteDeCompra.addAll(novoBaralho.getBaralho());
         }
+    
+        if (monteDeCompra.isEmpty()) {
+            return null; // Retorna null se ainda estiver vazio após adicionar um novo baralho
+        }
+    
         return monteDeCompra.remove(monteDeCompra.size() - 1);
     }
 

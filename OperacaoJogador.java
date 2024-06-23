@@ -109,7 +109,7 @@ class OperacaoJogador extends Jogador {
                 setNumeroDeCartas(mao.size()); // atualiza o número de cartas na mão
                 System.out.println("Você jogou a carta: " + cartaJogada);
                 operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa);
-
+                mesa.getMonteDeCompra().add(mesa.getUltimaCartaJogada());
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");
                 imprimirMao(); // imprime a mão do jogador

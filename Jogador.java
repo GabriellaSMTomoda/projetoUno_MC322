@@ -5,7 +5,7 @@ import java.util.List;
 public class Jogador {
     private String nome;
     private int numeroDeCartas;
-    private List<Cartas> mao;
+    private List<Carta> mao;
     private static List<Jogador> jogadores = new ArrayList<>();
 
     /**
@@ -50,11 +50,11 @@ public class Jogador {
     }
 
     public static void distribuirCartas(Baralho baralho) {
-        final int CARTAS_INICIAIS = 7;
-        for(Jogador jogador : jogadores) {
+        final int CARTAS_INICIAIS = 2;
+        for (Jogador jogador : jogadores) {
             jogador.mao = new ArrayList<>();
-            for(int i = 0; i < CARTAS_INICIAIS; i++) {
-                jogador.mao.add(baralho.getBaralho().remove(baralho.getBaralho().size() -1));
+            for (int i = 0; i < CARTAS_INICIAIS; i++) {
+                jogador.mao.add(baralho.getBaralho().remove(baralho.getBaralho().size() - 1));
             }
             jogador.setNumeroDeCartas(CARTAS_INICIAIS);
         }
@@ -65,17 +65,15 @@ public class Jogador {
     }
 
     /**
-    * Função para imprimir a mão do jogador
-    */
+     * Função para imprimir a mão do jogador
+     */
     public void imprimirMao() {
         System.out.println("Mão do jogador " + this.nome + ":");
-        for (Cartas carta : this.mao) {
-            
+        for (Carta carta : this.mao) {
             System.out.println("Cor: " + carta.getCor() + ", Tipo: " + carta.getTipo() + ", Numero: " + carta.getNumero());
         }
         System.out.println("________________________");
     }
-    
 
     // ----------------------------------- CONSTRUTOR -----------------------------------
     public Jogador(String nome, int numeroDeCartas) {
@@ -105,7 +103,7 @@ public class Jogador {
         return jogadores;
     }
 
-    public List<Cartas> getMao() {
+    public List<Carta> getMao() {
         return mao;
     }
 

@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Mesa {
-    private List<Cartas> monteDeCompra;   
-    private Cartas ultimaCartaJogada;
+    private List<Carta> monteDeCompra;   
+    private Carta ultimaCartaJogada;
     private int jogadorAtual = 0;
     
     private boolean ordemNormal = true;
@@ -14,7 +14,6 @@ public class Mesa {
     
     private boolean primeiroTurno = true;
     private Cor corAtual;
-    
     
     // ----------------------------------- CONSTRUTOR -----------------------------------
     public Mesa() {
@@ -48,6 +47,7 @@ public class Mesa {
     public void setOrdemNormal(boolean ordemNormal) {
         this.ordemNormal = ordemNormal;
     }
+
     public boolean isBloqueado() {
         return bloqueado;
     }
@@ -63,6 +63,7 @@ public class Mesa {
     public void setPrimeiroTurno(boolean primeiroTurno) {
         this.primeiroTurno = primeiroTurno;
     }
+
     public void setCorAtual(Cor cor) {
         this.corAtual = cor;
     }
@@ -71,36 +72,28 @@ public class Mesa {
         return corAtual;
     }
 
-    public List<Cartas> getMonteDeCompra() {
+    public List<Carta> getMonteDeCompra() {
         return monteDeCompra;
     }
 
-    public void setMonteDeCompra(List<Cartas> monteDeCompra) {
+    public void setMonteDeCompra(List<Carta> monteDeCompra) {
         this.monteDeCompra = monteDeCompra;
     }
 
-    public Cartas getUltimaCartaJogada() {
+    public Carta getUltimaCartaJogada() {
         return ultimaCartaJogada;
     }
 
-    public void setUltimaCartaJogada(Cartas ultimaCartaJogada) {
+    public void setUltimaCartaJogada(Carta ultimaCartaJogada) {
         this.ultimaCartaJogada = ultimaCartaJogada;
-    }
-
-    public int getJogadorAtual() {
-        return jogadorAtual;
-    }
-
-    public void setJogadorAtual(int jogadorAtual) {
-        this.jogadorAtual = jogadorAtual;
     }
 
     // Método que define a primeira carta da mesa
     public void primeiraCarta(Baralho baralho) {
         if (!baralho.getBaralho().isEmpty()) {
-            List<Cartas> cartas = baralho.getBaralho();
+            List<Carta> cartas = baralho.getBaralho();
             for (int i = 0; i < cartas.size(); i++) {
-                Cartas carta = cartas.get(i);
+                Carta carta = cartas.get(i);
                 if (carta.getTipo() == TipoDeCarta.NUMERO) {
                     cartas.remove(i);
                     setUltimaCartaJogada(carta);
@@ -115,7 +108,6 @@ public class Mesa {
 
     // Método para passar para o próximo turno
     public Jogador proximoTurno(List<Jogador> jogadores, OperacaoCarta operacaoCarta, Mesa mesa) {
-        
         if (bloqueado) {
             jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2) + jogadores.size()) % jogadores.size();
             bloqueado = false;
@@ -132,12 +124,12 @@ public class Mesa {
     }
 
     public void comprarCarta(OperacaoCarta operacaoCarta, List<Jogador> jogadores, Mesa mesa) {
-        if(compraDuas) {
+        if (compraDuas) {
             operacaoCarta.compraDuas(jogadores.get(jogadorAtual), mesa);
             System.out.println("O jogador anterior jogou um +2 para você");
             compraDuas = false;
         }
-        if(compraQuatro) {
+        if (compraQuatro) {
             operacaoCarta.compraQuatro(jogadores.get(jogadorAtual), mesa);
             System.out.println("O jogador anterior jogou um +4 para você");
             compraQuatro = false;
@@ -146,25 +138,23 @@ public class Mesa {
 
     // Método para comprar cartas quando o jogador precisar
     // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
-    public Cartas comprarCarta() {
+    public Carta comprarCarta() {
         if (monteDeCompra.isEmpty()) {
             // Adiciona um novo baralho se o monte de compra estiver vazio
             Baralho novoBaralho = new Baralho();
             monteDeCompra.addAll(novoBaralho.getBaralho());
-            
         }
-    
+
         if (monteDeCompra.isEmpty()) {
             return null; // Retorna null se ainda estiver vazio após adicionar um novo baralho
         }
-    
+
         return monteDeCompra.remove(monteDeCompra.size() - 1);
     }
 
     public void embaralharMonteDeCompra() {
         Collections.shuffle(monteDeCompra);
     }
-
 
     // Método para imprimir a última carta jogada
     public void imprimeUltimaCarta() {
@@ -176,7 +166,7 @@ public class Mesa {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Monte de Compra:\n");
-        for (Cartas carta : monteDeCompra) {
+        for (Carta carta : monteDeCompra) {
             sb.append(carta).append("\n");
         }
         sb.append("Última Carta Jogada: ").append(ultimaCartaJogada).append("\n");

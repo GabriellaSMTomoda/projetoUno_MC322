@@ -1,9 +1,8 @@
-public class Cartas {
+public class Cartas implements Carta {
     private Cor cor;
     private TipoDeCarta tipo;
     private int numero; // -1 se não for uma carta de número
 
-    // --------------------------- CONSTRUTORES -----------------------------------
     // Construtor para cartas de número
     public Cartas(Cor cor, int numero) {
         this.tipo = TipoDeCarta.NUMERO;
@@ -31,7 +30,7 @@ public class Cartas {
         this.numero = -1;
     }
 
-    // --------------------------- GETTERS E SETTERS ---------------------------
+    @Override
     public Cor getCor() {
         return cor;
     }
@@ -43,6 +42,7 @@ public class Cartas {
         this.cor = cor;
     }
 
+    @Override
     public TipoDeCarta getTipo() {
         return tipo;
     }
@@ -51,6 +51,7 @@ public class Cartas {
         this.tipo = tipo;
     }
 
+    @Override
     public int getNumero() {
         return numero;
     }

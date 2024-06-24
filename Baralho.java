@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Baralho {
-    private List<Cartas> baralho;
+    private List<Carta> baralho;
 
     // --------------------------- CONSTRUTOR-----------------------------------
     public Baralho() {
@@ -13,31 +13,35 @@ public class Baralho {
     }
 
     public void formarBaralho() {
+        CartaFactory numericaFactory = new CartaNumericaFactory();
+        CartaFactory especialColoridaFactory = new CartaEspecialColoridaFactory();
+        CartaFactory especialPretaFactory = new CartaEspecialPretaFactory();
+
         // Adiciona cartas de número de cada cor
         for (Cor cor : Cor.values()) {
             if (cor != Cor.PRETA) {
                 // Adiciona a carta 0 apenas uma vez por cor
-                baralho.add(new Cartas(cor, 0));
+                baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, 0));
                 
                 // Adiciona cartas de número 1 a 9 duas vezes cada
                 for (int i = 1; i <= 9; i++) {
-                    baralho.add(new Cartas(cor, i));
-                    baralho.add(new Cartas(cor, i));
+                    baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, i));
+                    baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, i));
                 }
 
                 // Adiciona cartas especiais de cada cor (duas vezes cada)
                 for (int i = 0; i < 2; i++) {
-                    baralho.add(new Cartas(cor, TipoDeCarta.COMPRA_MAIS_2));
-                    baralho.add(new Cartas(cor, TipoDeCarta.BLOQUEIO));
-                    baralho.add(new Cartas(cor, TipoDeCarta.INVERTE));
+                    baralho.add(especialColoridaFactory.criarCarta(cor, TipoDeCarta.COMPRA_MAIS_2, -1));
+                    baralho.add(especialColoridaFactory.criarCarta(cor, TipoDeCarta.BLOQUEIO, -1));
+                    baralho.add(especialColoridaFactory.criarCarta(cor, TipoDeCarta.INVERTE, -1));
                 }
             }
         }
 
         // Adicionar cartas pretas (especiais)
         for (int i = 0; i < 4; i++) {
-            baralho.add(new Cartas(TipoDeCarta.COMPRA_MAIS_4));
-            baralho.add(new Cartas(TipoDeCarta.ALTERACOR));
+            baralho.add(especialPretaFactory.criarCarta(Cor.PRETA, TipoDeCarta.COMPRA_MAIS_4, -1));
+            baralho.add(especialPretaFactory.criarCarta(Cor.PRETA, TipoDeCarta.ALTERACOR, -1));
         }
     }
 
@@ -48,7 +52,7 @@ public class Baralho {
 
     // Método para comprar cartas quando o jogador precisar
     // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
-    public Cartas comprarCarta(List<Cartas> pilhaDeDescarte) {
+    public Carta comprarCarta(List<Carta> pilhaDeDescarte) {
         if (baralho.isEmpty()) {
             if (pilhaDeDescarte == null || pilhaDeDescarte.isEmpty()) {
                 return null;
@@ -59,19 +63,19 @@ public class Baralho {
         return baralho.remove(baralho.size() - 1);
     }
 
-    private void reabastecerBaralho(List<Cartas> pilhaDeDescarte) {
-        Cartas cartaNoTopo = pilhaDeDescarte.remove(pilhaDeDescarte.size() - 1); // Não usa a última carta
+    private void reabastecerBaralho(List<Carta> pilhaDeDescarte) {
+        Carta cartaNoTopo = pilhaDeDescarte.remove(pilhaDeDescarte.size() - 1); // Não usa a última carta
         baralho.addAll(pilhaDeDescarte);
         pilhaDeDescarte.clear();
         pilhaDeDescarte.add(cartaNoTopo); // Recoloca a última carta na pilha de descarte
     }
 
     // --------------------------- GETTERS E SETTERS ---------------------------
-    public List<Cartas> getBaralho() {
+    public List<Carta> getBaralho() {
         return baralho;
     }
 
-    public void setBaralho(List<Cartas> baralho) {
+    public void setBaralho(List<Carta> baralho) {
         this.baralho = baralho;
     }
 
@@ -79,7 +83,7 @@ public class Baralho {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Cartas carta : baralho) {
+        for (Carta carta : baralho) {
             sb.append(carta).append("\n");
         }
         return sb.toString();
@@ -87,7 +91,7 @@ public class Baralho {
 
     // Método que imprime o baralho para teste
     public void imprimirBaralho() {
-        for (Cartas carta : baralho) {
+        for (Carta carta : baralho) {
             if (carta.getTipo() == TipoDeCarta.NUMERO) {
                 System.out.println("Cor: " + carta.getCor() + ", Numero: " + carta.getNumero());
             } else {

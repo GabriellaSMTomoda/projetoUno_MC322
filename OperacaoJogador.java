@@ -5,15 +5,18 @@ class OperacaoJogador extends Jogador {
 
     private int ultimaJogada;
     private boolean uno = false;
+    public boolean jogouCarta = false; // Variável para controlar se o jogador já jogou uma carta
+
 
     public OperacaoJogador(String nome, int numeroDeCartas, int ultimaJogada) {
         super(nome, numeroDeCartas);
         this.ultimaJogada = ultimaJogada;
     }
 
-    //menu impresso para o jogador escolher o que vai fazer
+
     public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador, OperacaoCarta operacaoCarta, Scanner scanner) {
         boolean turnoAtivo = true;
+        // boolean jogouCarta = false; // Variável para controlar se o jogador já jogou uma carta
     
         while (turnoAtivo) {
             mesa.imprimeUltimaCarta();
@@ -29,23 +32,25 @@ class OperacaoJogador extends Jogador {
             int operacao = scanner.nextInt();
     
             switch (operacao) {
-                case 0: //jogar carta
-                    if (ultimaJogada == 4) { //jogador já jogou
+                case 0: // Jogar carta
+                    if (jogouCarta) { // Jogador já jogou
                         System.out.println("Você já jogou uma carta neste turno! +1 carta pelo mal-caratismo. PRÓXIMO JOGADOR");
                         ultimaJogada = -1;
                         turnoAtivo = false;
-                    } else if (getNumeroDeCartas() == 1 && ultimaJogada != 2) { //jogador não "disse" UNO na última rodada
+                        jogouCarta = false;
+                    } else if (getNumeroDeCartas() == 1 && !uno) { // Jogador não "disse" UNO na última rodada
                         System.out.println("Você esqueceu de gritar UNO na última rodada! +1 carta e perdeu sua vez");
                         ultimaJogada = -1;
                         compra(jogador, mesa);
                         turnoAtivo = false;
+                        jogouCarta = false;
                     } else {
-                        jogarCarta(mesa, operacaoCarta, jogador);
+                        jogarCarta(mesa, operacaoCarta, jogador, scanner);
                         ultimaJogada = 4;
                     }
                     break;
-                case 1: //comprar 1 carta
-                    if (ultimaJogada == 4) { //jogador tentou comprar carta mas já jogou
+                case 1: // Comprar 1 carta
+                    if (jogouCarta) { // Jogador tentou comprar carta mas já jogou
                         compra(jogador, mesa);
                         System.out.println("Você já jogou! +1 carta e perdeu seu turno");
                         turnoAtivo = false;
@@ -54,37 +59,40 @@ class OperacaoJogador extends Jogador {
                         ultimaJogada = 1;
                     }
                     break;
-                case 2: //"grita" UNO
-                    if (getNumeroDeCartas() != 1) { //jogador tem mais de 1 carta
+                case 2: // "Grita" UNO
+                    if (getNumeroDeCartas() != 1) { // Jogador tem mais de 1 carta
                         System.out.println("Você só pode gritar UNO quando tiver uma carta! +1 carta pra você");
                         compra(jogador, mesa);
                     } else {
-                        uno = true; // define que o jogador gritou UNO
-                        System.out.println("UNO!!!"); //mostra que o jogador gritou UNO
-                        ultimaJogada = 2;
+                        uno = true; // Define que o jogador gritou UNO
+                        System.out.println("UNO!!!"); // Mostra que o jogador gritou UNO
+                        ultimaJogada = 5;
                     }
                     break;
-                case 3: //passa o turno
-                    if (ultimaJogada == 4) { //jogador jogou uma carta na mesa
+                case 3: // Passa o turno
+                    if (jogouCarta) { // Jogador jogou uma carta na mesa
                         System.out.println("Você passou a vez.");
                         ultimaJogada = 3;
                         turnoAtivo = false;
                     } else {
-                        if (!uno) { //jogador não gritou UNO na última rodada
+                        if (!uno) { // Jogador não gritou UNO na última rodada
                             System.out.println("Você está tentando passar a vez sem jogar, +1 carta");
                             compra(jogador, mesa);
                         } else {
-                            uno = false; //reseta o estado de UNO após passar a vez corretamente
+                            uno = false; // Reseta o estado de UNO após passar a vez corretamente
                             turnoAtivo = false;
                         }
                     }
+                    jogouCarta = false;
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
                     break;
             }
         }
+        scanner.nextLine(); // Limpa o buffer do scanner
     }
+    
 
     //compra uma carta
     public void compra(Jogador jogador, Mesa mesa) {
@@ -98,15 +106,14 @@ class OperacaoJogador extends Jogador {
     }
 
     //joga uma carta na mesa
-    public void jogarCarta(Mesa mesa, OperacaoCarta operacaoCarta, Jogador jogador) {
-        Scanner scanner = new Scanner(System.in);
+    public void jogarCarta(Mesa mesa, OperacaoCarta operacaoCarta, Jogador jogador, Scanner scanner) {
         List<Carta> mao = getMao(); // retorna a mão do jogador
         System.out.println("Escolha o número da carta que deseja jogar:");
         for (int i = 0; i < mao.size(); i++) {
             System.out.println((i + 1) + ": " + mao.get(i));
         }
         int cartaIndex = scanner.nextInt();
-        if (cartaIndex >= 1 && cartaIndex <= mao.size()) { // carta existe na mão do jogador
+        if (cartaIndex >= 1 && cartaIndex <= mao.size()) { // carta está no range do numero de cartas da mão do jogador
             Carta cartaJogada = mao.get(cartaIndex - 1);
             Carta ultimaCarta = mesa.getUltimaCartaJogada();
 
@@ -129,13 +136,16 @@ class OperacaoJogador extends Jogador {
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");
                 imprimirMao(); // imprime a mão do jogador
-                ultimaJogada = 4;
+                jogouCarta = true;
             } else {
                 System.out.println("Você não pode jogar essa carta. Tente novamente");
-                ultimaJogada = -1;
+                jogouCarta = false;
+                
             }
         } else {
             System.out.println("Carta inválida.");
+            jogouCarta = false;
+            
         }
     }
 

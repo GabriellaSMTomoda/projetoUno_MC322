@@ -3,26 +3,39 @@ import java.util.Collections;
 import java.util.List;
 
 public class Mesa {
-    private List<Carta> monteDeCompra;   
+
+    private static Mesa instance = null; // Passo 1: Campo estático para a instância única
+
+    private List<Carta> monteDeCompra;
     private Carta ultimaCartaJogada;
     private int jogadorAtual = 0;
-    
+
     private boolean ordemNormal = true;
     private boolean bloqueado = false;
     private boolean compraDuas = false;
     private boolean compraQuatro = false;
-    
+
     private boolean primeiroTurno = true;
     private Cor corAtual;
-    
-    // ----------------------------------- CONSTRUTOR -----------------------------------
-    public Mesa() {
+
+    // Passo 2: Construtor privado
+    private Mesa() {
         monteDeCompra = new ArrayList<>();
         this.ultimaCartaJogada = null;
         jogadorAtual = 0;
         ordemNormal = true;
     }
-    
+
+    // Passo 3: Método estático para acessar a instância única
+    public static Mesa getInstance() {
+        if (instance == null) {
+            instance = new Mesa();
+        }
+        return instance;
+    }
+
+    // Métodos da classe Mesa continuam aqui...
+
     // ----------------------------------- GETTERS E SETTERS ---------------------------
     public boolean isCompraDuas() {
         return compraDuas;

@@ -21,7 +21,7 @@ public class Main {
         OperacaoJogador.listaDeJogadores();
         Jogador.distribuirCartas(baralho);
 
-        Mesa mesa = new Mesa();
+        Mesa mesa = Mesa.getInstance();
 
         mesa.primeiraCarta(baralho);
 

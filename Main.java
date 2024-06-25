@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,8 +18,9 @@ public class Main {
                 "\n" + //
                 "");
 
+        Scanner scanner = new Scanner(System.in);
         Baralho baralho = new Baralho();
-        OperacaoJogador.listaDeJogadores();
+        OperacaoJogador.listaDeJogadores(scanner);
         Jogador.distribuirCartas(baralho);
 
         Mesa mesa = Mesa.getInstance();
@@ -32,7 +34,7 @@ public class Main {
             OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa);
             System.out.println("É a vez de: " + jogadorAtual.getNome());
             jogadorAtual.imprimirMao();
-            jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta);
+            jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta, scanner);
 
 
             if (Jogador.Resultado(jogadorAtual)) {
@@ -42,5 +44,6 @@ public class Main {
             mesa.embaralharMonteDeCompra();
             
         } while (true);
+        scanner.close();
     }
 }

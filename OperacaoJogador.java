@@ -11,8 +11,7 @@ class OperacaoJogador extends Jogador {
         this.ultimaJogada = ultimaJogada;
     }
 
-    public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador, OperacaoCarta operacaoCarta) {
-        Scanner scanner = new Scanner(System.in);
+    public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador, OperacaoCarta operacaoCarta, Scanner scanner) {
         boolean turnoAtivo = true;
     
         while (turnoAtivo) {
@@ -123,7 +122,7 @@ class OperacaoJogador extends Jogador {
                 mao.remove(cartaIndex - 1);
                 setNumeroDeCartas(mao.size()); // atualiza o número de cartas na mão
                 System.out.println("Você jogou a carta: " + cartaJogada);
-                operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa);
+                operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa, scanner);
                 mesa.getMonteDeCompra().add(mesa.getUltimaCartaJogada());
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");

@@ -1,9 +1,8 @@
-import java.util.List;
 import java.util.Scanner;
 
 public class OperacaoCarta {
 
-    public void realizarOperacaoCarta(Carta carta, Mesa mesa) {
+    public void realizarOperacaoCarta(Carta carta, Mesa mesa, Scanner scanner) {
         TipoDeCarta tipo = carta.getTipo();
         switch (tipo) {
             case INVERTE:
@@ -16,11 +15,11 @@ public class OperacaoCarta {
                 mesa.setCompraDuas(true);
                 break;
             case COMPRA_MAIS_4:
-                mudaCor(carta, mesa);
+                mudaCor(carta, mesa, scanner);
                 mesa.setCompraQuatro(true);
                 break;
             case ALTERACOR:
-                mudaCor(carta, mesa);
+                mudaCor(carta, mesa, scanner);
                 break;
             case NUMERO:
                 // No specific action needed for number cards
@@ -58,8 +57,7 @@ public class OperacaoCarta {
         }
     }
 
-    public void mudaCor(Carta carta, Mesa mesa) {
-        Scanner scanner = new Scanner(System.in);
+    public void mudaCor(Carta carta, Mesa mesa, Scanner scanner) {
 
         if (carta.getCor() == Cor.PRETA) {
             while (true) {

@@ -12,8 +12,7 @@ public class Jogador {
      * Função em que o usuário determina o número de jogadores
      * @return quantidade de jogadores
      */
-    public static int numeroDeJogadores() {
-        Scanner scanner = new Scanner(System.in);
+    public static int numeroDeJogadores(Scanner scanner) {
         while (true) {
             System.out.println("Digite a quantidade de jogadores. (de 2 a 6)");
             int nJogadores = scanner.nextInt();
@@ -29,10 +28,9 @@ public class Jogador {
     /**
      * Função que coleta a lista de jogadores
      */
-    public static void listaDeJogadores() {
-        Scanner scanner = new Scanner(System.in);
+    public static void listaDeJogadores(Scanner scanner) {
 
-        int nJogadores = numeroDeJogadores();
+        int nJogadores = numeroDeJogadores(scanner);
 
         for (int i = 0; i < nJogadores; i++) {
             System.out.print("Digite o nome do jogador " + (i + 1) + ": ");
@@ -46,11 +44,10 @@ public class Jogador {
             System.out.println(jogador.getNome());
         }
         System.out.println("________________________");
-        //scanner.close();
     }
 
     public static void distribuirCartas(Baralho baralho) {
-        final int CARTAS_INICIAIS = 2;
+        final int CARTAS_INICIAIS = 7;
         for (Jogador jogador : jogadores) {
             jogador.mao = new ArrayList<>();
             for (int i = 0; i < CARTAS_INICIAIS; i++) {

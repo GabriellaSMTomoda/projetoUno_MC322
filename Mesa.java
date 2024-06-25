@@ -1,10 +1,13 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Mesa {
+public class Mesa implements Serializable {
 
-    private static Mesa instance = null; 
+    private static final long serialVersionUID = 1L;
+
+    private static Mesa instance = null;
 
     private List<Carta> monteDeCompra;
     private Carta ultimaCartaJogada;
@@ -181,5 +184,27 @@ public class Mesa {
         }
         sb.append("Última Carta Jogada: ").append(ultimaCartaJogada).append("\n");
         return sb.toString();
+    }
+
+    // Método para salvar o estado atual da mesa em um arquivo
+    public void salvarEstado(String nomeArquivo) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(nomeArquivo))) {
+            outputStream.writeObject(this); // Grava o estado atual da mesa no arquivo
+            System.out.println("Estado da mesa salvo com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar estado da mesa: " + e.getMessage());
+        }
+    }
+
+    // Método estático para carregar o estado da mesa a partir de um arquivo
+    public static Mesa carregarEstado(String nomeArquivo) {
+        Mesa mesa = null;
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(nomeArquivo))) {
+            mesa = (Mesa) inputStream.readObject(); // Lê o estado da mesa do arquivo
+            System.out.println("Estado da mesa carregado com sucesso!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao carregar estado da mesa: " + e.getMessage());
+        }
+        return mesa;
     }
 }

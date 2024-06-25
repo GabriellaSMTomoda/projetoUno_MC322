@@ -48,7 +48,7 @@ public class Jogador {
 
     //distribui as cartas iniciais para os jogadores
     public static void distribuirCartas(Baralho baralho) {
-        final int CARTAS_INICIAIS = 2;
+        final int CARTAS_INICIAIS = 7;
         for (Jogador jogador : jogadores) {
             jogador.mao = new ArrayList<>();
             for (int i = 0; i < CARTAS_INICIAIS; i++) {

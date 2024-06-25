@@ -30,18 +30,19 @@ public class Main {
         OperacaoCarta operacaoCarta = new OperacaoCarta();
 
         List<Jogador> jogadores = Jogador.getJogadores();
-        do {
-            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa);
+        do { //loop que acaba apenas quando algum jogador ganhar o jogo
+            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa); //atualiza o turno
             System.out.println("É a vez de: " + jogadorAtual.getNome());
             jogadorAtual.imprimirMao();
             jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta, scanner);
 
-
+            //confere o jogador ganhou
             if (Jogador.Resultado(jogadorAtual)) {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");
                 break;
             }
-            mesa.embaralharMonteDeCompra();
+        
+            mesa.embaralharMonteDeCompra(); //embaralha o monte de compra
             
         } while (true);
         scanner.close();

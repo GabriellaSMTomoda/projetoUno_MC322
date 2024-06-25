@@ -46,6 +46,7 @@ public class Jogador {
         System.out.println("________________________");
     }
 
+    //distribui as cartas iniciais para os jogadores
     public static void distribuirCartas(Baralho baralho) {
         final int CARTAS_INICIAIS = 7;
         for (Jogador jogador : jogadores) {
@@ -57,6 +58,7 @@ public class Jogador {
         }
     }
 
+    //confere seu o jogador ganhou o jogo (não possui mais cartas na mão)
     public static boolean Resultado(Jogador jogador) {
         return jogador.getMao().isEmpty();
     }

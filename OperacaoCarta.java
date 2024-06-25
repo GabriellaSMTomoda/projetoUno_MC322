@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class OperacaoCarta {
 
+    //Vê o tipo da carta e realiza a "operação" dela
     public void realizarOperacaoCarta(Carta carta, Mesa mesa, Scanner scanner) {
         TipoDeCarta tipo = carta.getTipo();
         switch (tipo) {
@@ -22,14 +23,13 @@ public class OperacaoCarta {
                 mudaCor(carta, mesa, scanner);
                 break;
             case NUMERO:
-                // No specific action needed for number cards
                 break;
             default:
                 throw new IllegalArgumentException("Tipo de carta desconhecido: " + tipo);
         }
     }
 
-    public void compra(Jogador jogador, Mesa mesa) {
+    private void compra(Jogador jogador, Mesa mesa) {
         Carta cartaComprada = mesa.comprarCarta();
         if (cartaComprada != null) {
             jogador.getMao().add(cartaComprada);
@@ -37,26 +37,31 @@ public class OperacaoCarta {
         }
     }
 
+    //inverte a ordem que está a rodada
     public void inverterOrdem(Mesa mesa) {
         mesa.setOrdemNormal(!mesa.isOrdemNormal());
     }
 
+    //bloqueia
     public void bloquearProximoJogador(Mesa mesa) {
         mesa.setBloqueado(true);
     }
 
+    //compra 2
     public void compraDuas(Jogador jogador, Mesa mesa) {
         for (int i = 0; i < 2; i++) {
             compra(jogador, mesa);
         }
     }
 
+    //compra 4
     public void compraQuatro(Jogador jogador, Mesa mesa) {
         for (int i = 0; i < 4; i++) {
             compra(jogador, mesa);
         }
     }
 
+    //muda a cor da carta da mesa de acordo com oque o jogador selecionou
     public void mudaCor(Carta carta, Mesa mesa, Scanner scanner) {
 
         if (carta.getCor() == Cor.PRETA) {

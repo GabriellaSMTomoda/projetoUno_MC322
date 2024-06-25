@@ -11,6 +11,7 @@ class OperacaoJogador extends Jogador {
         this.ultimaJogada = ultimaJogada;
     }
 
+    //menu impresso para o jogador escolher o que vai fazer
     public void menuJogador(Baralho baralho, Mesa mesa, Jogador jogador, OperacaoCarta operacaoCarta, Scanner scanner) {
         boolean turnoAtivo = true;
     
@@ -28,12 +29,12 @@ class OperacaoJogador extends Jogador {
             int operacao = scanner.nextInt();
     
             switch (operacao) {
-                case 0:
-                    if (ultimaJogada == 4) {
+                case 0: //jogar carta
+                    if (ultimaJogada == 4) { //jogador já jogou
                         System.out.println("Você já jogou uma carta neste turno! +1 carta pelo mal-caratismo. PRÓXIMO JOGADOR");
                         ultimaJogada = -1;
                         turnoAtivo = false;
-                    } else if (getNumeroDeCartas() == 1 && ultimaJogada != 2) {
+                    } else if (getNumeroDeCartas() == 1 && ultimaJogada != 2) { //jogador não "disse" UNO na última rodada
                         System.out.println("Você esqueceu de gritar UNO na última rodada! +1 carta e perdeu sua vez");
                         ultimaJogada = -1;
                         compra(jogador, mesa);
@@ -43,8 +44,8 @@ class OperacaoJogador extends Jogador {
                         ultimaJogada = 4;
                     }
                     break;
-                case 1:
-                    if (ultimaJogada == 4) {
+                case 1: //comprar 1 carta
+                    if (ultimaJogada == 4) { //jogador tentou comprar carta mas já jogou
                         compra(jogador, mesa);
                         System.out.println("Você já jogou! +1 carta e perdeu seu turno");
                         turnoAtivo = false;
@@ -53,27 +54,27 @@ class OperacaoJogador extends Jogador {
                         ultimaJogada = 1;
                     }
                     break;
-                case 2:
-                    if (getNumeroDeCartas() != 1) {
+                case 2: //"grita" UNO
+                    if (getNumeroDeCartas() != 1) { //jogador tem mais de 1 carta
                         System.out.println("Você só pode gritar UNO quando tiver uma carta! +1 carta pra você");
                         compra(jogador, mesa);
                     } else {
-                        uno = true; // Define que o jogador gritou UNO
-                        System.out.println("UNO!!!"); // Mostra que o jogador gritou UNO
+                        uno = true; // define que o jogador gritou UNO
+                        System.out.println("UNO!!!"); //mostra que o jogador gritou UNO
                         ultimaJogada = 2;
                     }
                     break;
-                case 3:
-                    if (ultimaJogada == 4) {
+                case 3: //passa o turno
+                    if (ultimaJogada == 4) { //jogador jogou uma carta na mesa
                         System.out.println("Você passou a vez.");
                         ultimaJogada = 3;
                         turnoAtivo = false;
                     } else {
-                        if (!uno) {
+                        if (!uno) { //jogador não gritou UNO na última rodada
                             System.out.println("Você está tentando passar a vez sem jogar, +1 carta");
                             compra(jogador, mesa);
                         } else {
-                            uno = false; // Reseta o estado de UNO após passar a vez corretamente
+                            uno = false; //reseta o estado de UNO após passar a vez corretamente
                             turnoAtivo = false;
                         }
                     }
@@ -85,7 +86,7 @@ class OperacaoJogador extends Jogador {
         }
     }
 
-    // Compra uma carta
+    //compra uma carta
     public void compra(Jogador jogador, Mesa mesa) {
         Carta cartaComprada = mesa.comprarCarta();
         if (cartaComprada != null) {
@@ -96,6 +97,7 @@ class OperacaoJogador extends Jogador {
         imprimirMao();
     }
 
+    //joga uma carta na mesa
     public void jogarCarta(Mesa mesa, OperacaoCarta operacaoCarta, Jogador jogador) {
         Scanner scanner = new Scanner(System.in);
         List<Carta> mao = getMao(); // retorna a mão do jogador
@@ -104,16 +106,16 @@ class OperacaoJogador extends Jogador {
             System.out.println((i + 1) + ": " + mao.get(i));
         }
         int cartaIndex = scanner.nextInt();
-        if (cartaIndex >= 1 && cartaIndex <= mao.size()) {
+        if (cartaIndex >= 1 && cartaIndex <= mao.size()) { // carta existe na mão do jogador
             Carta cartaJogada = mao.get(cartaIndex - 1);
             Carta ultimaCarta = mesa.getUltimaCartaJogada();
 
             boolean podeJogar = false;
 
-            // Verifica se a carta pode ser jogada
-            if (cartaJogada.getCor() == ultimaCarta.getCor() ||
-                    cartaJogada.getNumero() == ultimaCarta.getNumero() ||
-                    mesa.getCorAtual() == cartaJogada.getCor() ||
+            // verifica se a carta pode ser jogada a partir das condições do uno
+            if (cartaJogada.getCor() == ultimaCarta.getCor() ||  //mesma cor
+                    cartaJogada.getNumero() == ultimaCarta.getNumero() || //mesmo número
+                    mesa.getCorAtual() == cartaJogada.getCor() || //cor atual da mesa(caso a carta da mesa seja preta)
                     cartaJogada.getCor() == Cor.PRETA) { // Cartas coringa
                 podeJogar = true;
             }
@@ -122,8 +124,8 @@ class OperacaoJogador extends Jogador {
                 mao.remove(cartaIndex - 1);
                 setNumeroDeCartas(mao.size()); // atualiza o número de cartas na mão
                 System.out.println("Você jogou a carta: " + cartaJogada);
-                operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa, scanner);
-                mesa.getMonteDeCompra().add(mesa.getUltimaCartaJogada());
+                operacaoCarta.realizarOperacaoCarta(cartaJogada, mesa, scanner); //realiza operação da carta
+                mesa.getMonteDeCompra().add(mesa.getUltimaCartaJogada()); //adicona a antiga carta da mesa na pilha de compra
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");
                 imprimirMao(); // imprime a mão do jogador

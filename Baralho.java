@@ -8,8 +8,8 @@ public class Baralho {
     // --------------------------- CONSTRUTOR-----------------------------------
     public Baralho() {
         this.baralho = new ArrayList<>();
-        formarBaralho(); // Função que cria o baralho a partir das cartas que podem existir
-        embaralhar(); // Função que embaralha o baralho todas as vezes necessárias
+        formarBaralho(); //função que cria o baralho a partir das cartas que podem existir
+        embaralhar(); // função que embaralha o baralho todas as vezes necessárias
     }
 
     public void formarBaralho() {
@@ -17,19 +17,19 @@ public class Baralho {
         CartaFactory especialColoridaFactory = new CartaEspecialColoridaFactory();
         CartaFactory especialPretaFactory = new CartaEspecialPretaFactory();
 
-        // Adiciona cartas de número de cada cor
+        //adiciona cartas de número de cada cor
         for (Cor cor : Cor.values()) {
             if (cor != Cor.PRETA) {
-                // Adiciona a carta 0 apenas uma vez por cor
+                // adiciona a carta 0 apenas uma vez por cor
                 baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, 0));
                 
-                // Adiciona cartas de número 1 a 9 duas vezes cada
+                // adiciona cartas de número 1 a 9 duas vezes cada
                 for (int i = 1; i <= 9; i++) {
                     baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, i));
                     baralho.add(numericaFactory.criarCarta(cor, TipoDeCarta.NUMERO, i));
                 }
 
-                // Adiciona cartas especiais de cada cor (duas vezes cada)
+                // adiciona cartas especiais de cada cor (duas vezes cada)
                 for (int i = 0; i < 2; i++) {
                     baralho.add(especialColoridaFactory.criarCarta(cor, TipoDeCarta.COMPRA_MAIS_2, -1));
                     baralho.add(especialColoridaFactory.criarCarta(cor, TipoDeCarta.BLOQUEIO, -1));
@@ -38,14 +38,14 @@ public class Baralho {
             }
         }
 
-        // Adicionar cartas pretas (especiais)
+        // adiciona cartas pretas (especiais)
         for (int i = 0; i < 4; i++) {
             baralho.add(especialPretaFactory.criarCarta(Cor.PRETA, TipoDeCarta.COMPRA_MAIS_4, -1));
             baralho.add(especialPretaFactory.criarCarta(Cor.PRETA, TipoDeCarta.ALTERACOR, -1));
         }
     }
 
-    // Embaralha o baralho
+    //Embaralha o baralho
     public void embaralhar() {
         Collections.shuffle(baralho);
     }
@@ -63,6 +63,7 @@ public class Baralho {
         return baralho.remove(baralho.size() - 1);
     }
 
+    //Caso o baralho acabe, adiciona um novo na pilha de compra/descarte
     private void reabastecerBaralho(List<Carta> pilhaDeDescarte) {
         Carta cartaNoTopo = pilhaDeDescarte.remove(pilhaDeDescarte.size() - 1); // Não usa a última carta
         baralho.addAll(pilhaDeDescarte);

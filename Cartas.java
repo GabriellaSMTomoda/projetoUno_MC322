@@ -3,7 +3,7 @@ public class Cartas implements Carta {
     private TipoDeCarta tipo;
     private int numero; // -1 se não for uma carta de número
 
-    // Construtor para cartas de número
+// ----------------------CONSTRUTORES----------------------------
     public Cartas(Cor cor, int numero) {
         this.tipo = TipoDeCarta.NUMERO;
         this.cor = cor;
@@ -30,6 +30,7 @@ public class Cartas implements Carta {
         this.numero = -1;
     }
 
+    //-------------------------GETTERS E SETTERS---------------------------
     @Override
     public Cor getCor() {
         return cor;

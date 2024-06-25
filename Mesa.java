@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Mesa {
 
-    private static Mesa instance = null; // Passo 1: Campo estático para a instância única
+    private static Mesa instance = null; 
 
     private List<Carta> monteDeCompra;
     private Carta ultimaCartaJogada;
@@ -18,7 +18,7 @@ public class Mesa {
     private boolean primeiroTurno = true;
     private Cor corAtual;
 
-    // Passo 2: Construtor privado
+    // -------------------CONSTRUTOR --------------------------
     private Mesa() {
         monteDeCompra = new ArrayList<>();
         this.ultimaCartaJogada = null;
@@ -26,7 +26,6 @@ public class Mesa {
         ordemNormal = true;
     }
 
-    // Passo 3: Método estático para acessar a instância única
     public static Mesa getInstance() {
         if (instance == null) {
             instance = new Mesa();
@@ -34,7 +33,6 @@ public class Mesa {
         return instance;
     }
 
-    // Métodos da classe Mesa continuam aqui...
 
     // ----------------------------------- GETTERS E SETTERS ---------------------------
     public boolean isCompraDuas() {
@@ -119,10 +117,10 @@ public class Mesa {
         }
     }
 
-    // Método para passar para o próximo turno
+    // Método para passar para o próximo turno(atualiza o jogador)
     public Jogador proximoTurno(List<Jogador> jogadores, OperacaoCarta operacaoCarta, Mesa mesa) {
-        if (bloqueado) {
-            jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2) + jogadores.size()) % jogadores.size();
+        if (bloqueado) { //se a carta da mesa for um bloqueio
+            jogadorAtual = (jogadorAtual + (ordemNormal ? 2 : -2) + jogadores.size()) % jogadores.size(); //pula 2 índices da lista de jogadores
             bloqueado = false;
             return jogadores.get(jogadorAtual);
         } 
@@ -150,16 +148,15 @@ public class Mesa {
     }
 
     // Método para comprar cartas quando o jogador precisar
-    // Se o baralho estiver vazio, ele atualiza o baralho com uma pilha de descarte embaralhada 
     public Carta comprarCarta() {
         if (monteDeCompra.isEmpty()) {
-            // Adiciona um novo baralho se o monte de compra estiver vazio
+            //adiciona um novo baralho se o monte de compra estiver vazio
             Baralho novoBaralho = new Baralho();
             monteDeCompra.addAll(novoBaralho.getBaralho());
         }
 
         if (monteDeCompra.isEmpty()) {
-            return null; // Retorna null se ainda estiver vazio após adicionar um novo baralho
+            return null; //retorna null se ainda estiver vazio após adicionar um novo baralho
         }
 
         return monteDeCompra.remove(monteDeCompra.size() - 1);

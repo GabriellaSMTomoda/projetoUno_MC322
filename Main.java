@@ -2,8 +2,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Bem vindx ao nosso...");
+        System.out.println("Bem-vindx ao nosso...");
         System.out.println(" .----------------.  .-----------------. .----------------.  .----------------. \n" + //
                 "| .--------------. || .--------------. || .--------------. || .--------------. |\n" + //
                 "| | _____  _____ | || | ____  _____  | || |     ____     | || |              | |\n" + //
@@ -23,28 +24,33 @@ public class Main {
         OperacaoJogador.listaDeJogadores(scanner);
         Jogador.distribuirCartas(baralho);
 
-        Mesa mesa = Mesa.getInstance();
+        //configura o jogo 
+        Mesa mesa = JogoUNO.configurarJogo();
+        JogoUNO.salvarJogo(mesa);
 
-        mesa.primeiraCarta(baralho);
 
         OperacaoCarta operacaoCarta = new OperacaoCarta();
-
         List<Jogador> jogadores = Jogador.getJogadores();
-        do { //loop que acaba apenas quando algum jogador ganhar o jogo
-            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa); //atualiza o turno
+
+        do {
+            OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa);
+
             System.out.println("É a vez de: " + jogadorAtual.getNome());
             jogadorAtual.imprimirMao();
             jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta, scanner);
 
-            //confere o jogador ganhou
             if (Jogador.Resultado(jogadorAtual)) {
                 System.out.println(jogadorAtual.getNome() + " venceu o jogo!");
                 break;
             }
-        
-            mesa.embaralharMonteDeCompra(); //embaralha o monte de compra
-            
+
+            mesa.embaralharMonteDeCompra();
+
+            //salva o estado da mesa após cada turno
+            JogoUNO.salvarJogo(mesa);
+
         } while (true);
+
         scanner.close();
     }
 }

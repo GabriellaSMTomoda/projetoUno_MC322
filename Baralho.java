@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.io.Serializable;
 
-public class Baralho {
+public class Baralho implements Serializable{
     private List<Carta> baralho;
-
+    private static final long serialVersionUID = 1L;
     // --------------------------- CONSTRUTOR-----------------------------------
     public Baralho() {
         this.baralho = new ArrayList<>();

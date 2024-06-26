@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.io.Serializable;
 
-public class OperacaoCarta {
+public class OperacaoCarta implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     //Vê o tipo da carta e realiza a "operação" dela
     public void realizarOperacaoCarta(Carta carta, Mesa mesa, Scanner scanner) {

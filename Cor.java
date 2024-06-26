@@ -1,3 +1,4 @@
+
 public enum Cor {
     AZUL,
     AMARELA,

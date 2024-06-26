@@ -1,8 +1,11 @@
 import java.util.Scanner;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
-public class Jogador {
+public class Jogador implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nome;
     private int numeroDeCartas;
     private List<Carta> mao;
@@ -14,13 +17,18 @@ public class Jogador {
      */
     public static int numeroDeJogadores(Scanner scanner) {
         while (true) {
-            System.out.println("Digite a quantidade de jogadores. (de 2 a 6)");
-            int nJogadores = scanner.nextInt();
-            scanner.nextLine();
-            if (nJogadores >= 2 && nJogadores <= 6) {
-                return nJogadores;
-            } else {
-                System.out.println("O número de jogadores é inválido.");
+            try {
+                System.out.println("Digite a quantidade de jogadores. (de 2 a 6)");
+                int nJogadores = scanner.nextInt();
+                scanner.nextLine();
+                if (nJogadores >= 2 && nJogadores <= 6) {
+                    return nJogadores;
+                } else {
+                    System.out.println("O número de jogadores é inválido. Por favor, insira um número entre 2 e 6.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                scanner.nextLine(); // Limpa a entrada inválida
             }
         }
     }
@@ -104,6 +112,11 @@ public class Jogador {
 
     public List<Carta> getMao() {
         return mao;
+    }
+
+    @Override
+    public String toString() {
+        return "Jogador [nome=" + nome + ", numeroDeCartas=" + numeroDeCartas + ", mao=" + mao + "]";
     }
 
 }

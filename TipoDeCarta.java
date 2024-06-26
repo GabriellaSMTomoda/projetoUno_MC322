@@ -1,3 +1,5 @@
+//import java.io.Serializable;
+
 public enum TipoDeCarta {
     NUMERO,
     COMPRA_MAIS_2,

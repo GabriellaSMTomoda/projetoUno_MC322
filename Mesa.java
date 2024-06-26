@@ -174,19 +174,7 @@ public class Mesa implements Serializable {
         System.out.println("Última carta jogada: " + ultimaCartaJogada);
     }
 
-    // Método toString para representação textual da Mesa
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Monte de Compra:\n");
-        for (Carta carta : monteDeCompra) {
-            sb.append(carta).append("\n");
-        }
-        sb.append("Última Carta Jogada: ").append(ultimaCartaJogada).append("\n");
-        return sb.toString();
-    }
-
-    // Método para salvar o estado atual da mesa em um arquivo
+    // Método para salvar o estado atual da mesa no arquivo
     public void salvarEstado(String nomeArquivo) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(nomeArquivo))) {
             outputStream.writeObject(this); // Grava o estado atual da mesa no arquivo
@@ -200,11 +188,19 @@ public class Mesa implements Serializable {
     public static Mesa carregarEstado(String nomeArquivo) {
         Mesa mesa = null;
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(nomeArquivo))) {
-            mesa = (Mesa) inputStream.readObject(); // Lê o estado da mesa do arquivo
+            mesa = (Mesa) inputStream.readObject(); //lê o estado da mesa do arquivo
             System.out.println("Estado da mesa carregado com sucesso!");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Erro ao carregar estado da mesa: " + e.getMessage());
         }
         return mesa;
+    }
+
+    @Override
+    public String toString() {
+        return "Mesa [monteDeCompra=" + monteDeCompra + ", ultimaCartaJogada=" + ultimaCartaJogada + ", jogadorAtual="
+                + jogadorAtual + ", ordemNormal=" + ordemNormal + ", bloqueado=" + bloqueado + ", compraDuas="
+                + compraDuas + ", compraQuatro=" + compraQuatro + ", primeiroTurno=" + primeiroTurno + ", corAtual="
+                + corAtual + "]";
     }
 }

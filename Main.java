@@ -36,7 +36,6 @@ public class Main {
             OperacaoJogador jogadorAtual = (OperacaoJogador) mesa.proximoTurno(jogadores, operacaoCarta, mesa);
 
             System.out.println("É a vez de: " + jogadorAtual.getNome());
-            jogadorAtual.imprimirMao();
             jogadorAtual.menuJogador(baralho, mesa, jogadorAtual, operacaoCarta, scanner);
 
             if (Jogador.Resultado(jogadorAtual)) {
@@ -48,6 +47,10 @@ public class Main {
 
             //salva o estado da mesa após cada turno
             JogoUNO.salvarJogo(mesa);
+
+            for(int i = 0; i < 4; i++) {
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            }
 
         } while (true);
 

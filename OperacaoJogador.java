@@ -20,15 +20,15 @@ class OperacaoJogador extends Jogador {
     
         while (turnoAtivo) {
             mesa.imprimeUltimaCarta();
-            if (mesa.getUltimaCartaJogada().getCor() == Cor.PRETA) {
-                System.out.println("A cor da rodada é: " + mesa.getCorAtual());
-            }
+
     
             System.out.println("Digite o número do que deseja fazer: ");
             System.out.println("0 - Jogar carta\n" + 
                                 "1 - Comprar carta\n" +
                                 "2 - UNO!!!!\n" +
-                                "3 - Passar vez\n");
+                                "3 - Passar vez\n" +
+                                "9 - Mostrar cartas\n");
+
             int operacao = scanner.nextInt();
     
             switch (operacao) {
@@ -85,6 +85,9 @@ class OperacaoJogador extends Jogador {
                     }
                     jogouCarta = false;
                     break;
+                case 9:
+                    imprimirMao();
+                    break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
                     break;
@@ -102,7 +105,7 @@ class OperacaoJogador extends Jogador {
             jogador.setNumeroDeCartas(jogador.getNumeroDeCartas() + 1);
         }
         System.out.println("Nova mão:");
-        imprimirMao();
+        //imprimirMao();
     }
 
     //joga uma carta na mesa
@@ -135,7 +138,7 @@ class OperacaoJogador extends Jogador {
                 mesa.getMonteDeCompra().add(mesa.getUltimaCartaJogada()); //adicona a antiga carta da mesa na pilha de compra
                 mesa.setUltimaCartaJogada(cartaJogada);
                 System.out.println("Nova mão:");
-                imprimirMao(); // imprime a mão do jogador
+                //imprimirMao(); // imprime a mão do jogador
                 jogouCarta = true;
             } else {
                 System.out.println("Você não pode jogar essa carta. Tente novamente");

@@ -20,6 +20,7 @@ public class Cartas implements Carta {
         this.numero = -1;
     }
 
+
     // Construtor para cartas especiais pretas
     public Cartas(TipoDeCarta tipo) {
         if (tipo != TipoDeCarta.COMPRA_MAIS_4 && tipo != TipoDeCarta.ALTERACOR) {

@@ -171,7 +171,22 @@ public class Mesa implements Serializable {
 
     // Método para imprimir a última carta jogada
     public void imprimeUltimaCarta() {
-        System.out.println("Última carta jogada: " + ultimaCartaJogada);
+        System.out.println("Última carta jogada: ");
+    
+        System.out.println(" _________ ");
+        System.out.println("|         |");
+        System.out.printf("|    %-5s |\n", ultimaCartaJogada.getCor().name());
+        System.out.printf("|    %-5s |\n", ultimaCartaJogada.getNumero());
+        System.out.printf("|   %-6s |\n", ultimaCartaJogada.getTipo().name());
+        System.out.println("|_________|");
+
+        if (ultimaCartaJogada.getCor() == Cor.PRETA) {
+            System.out.println(" _________ ");
+            System.out.println("|         |");
+            System.out.printf("|    %-5s |\n", corAtual);
+            System.out.println("|_________|");
+        }
+
     }
 
     // Método para salvar o estado atual da mesa no arquivo
